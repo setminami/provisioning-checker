@@ -8,7 +8,7 @@
   "activationCommands": {
     "atom-workspace": "provisioning-checker:display-results"
   },
-  "repository": "https://github.com/atom/provisioning-checker",
+  "repository": "https://github.com/setminami/provisioning-checker",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
