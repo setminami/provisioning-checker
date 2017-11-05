@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle provisioning-checker",
+        "command": "provisioning-checker:display-results"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Provisioning Checker",
+          "submenu": [
+            {
+              "label": "Result",
+              "command": "provisioning-checker:display-results"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

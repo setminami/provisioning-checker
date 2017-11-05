@@ -1,0 +1,19 @@
+{
+  "name": "provisioning-checker",
+  "main": "./lib/provisioning-checker",
+  "version": "0.0.1",
+  "description": "Check Provisioning files among .p12 & .mobileprovision",
+  "keywords": ["x509", "openssl"
+  ],
+  "activationCommands": {
+    "atom-workspace": "provisioning-checker:display-results"
+  },
+  "repository": "https://github.com/atom/provisioning-checker",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "space-pen": "^5.1.2"
+  }
+}
