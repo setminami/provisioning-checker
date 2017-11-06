@@ -181,6 +181,3 @@ class ProvisioningChecker:
 if __name__ == '__main__':
     ins = ProvisioningChecker()
     ins.check()
-
-
-
