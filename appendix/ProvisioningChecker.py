@@ -23,10 +23,13 @@ class ProvisioningChecker:
     def __init__(self):
         self.ARGS = ProvisioningChecker.ArgParser()
 
+    def out(self, msg):
+        sys.stdout.write(msg + '\n')
+
     def preCheck(self):
         precmd = 'type openssl; openssl version'
         if sp.check_call(precmd, shell=True) != 0:
-            print('openssl NOT FOUND!')
+            self.out('openssl NOT FOUND!')
             sys.exit(1)
         pass
 
@@ -46,7 +49,7 @@ class ProvisioningChecker:
 
         os.mkdir(dateTmp)
         if self.ARGS.cert is not '' :
-            self.analyzeP12(p12out)
+            self.analyzeP12(self.ARGS.p12pswd, p12out)
             p12 = True
             pass
         if self.ARGS.provision is not '' :
@@ -59,28 +62,28 @@ class ProvisioningChecker:
         if p12 and prov:
             diff, differences = self.compareX509((p12out[3], provout[3]))
             if diff :
-                print('>> NG!!!! <%s> doesn\'t match with <%s> !'%files)
+                self.out('>> NG!!!! <%s> doesn\'t match with <%s> !'%files)
                 info = '- : %s\n+ : %s'%files
-                print(info)
+                self.out(info)
                 pass
             else :
-                print('>> OK %s  matches with %s '%files)
+                self.out('>> OK %s  matches with %s '%files)
                 info = 'Matched Certification as X.509\n%s\n%s'%files
                 pass
 
-            print('see results %s in X.509 details.'%outFile)
+            self.out('see results %s in X.509 details.'%outFile)
             f = open(outFile, 'w')
             f.write(info + '\n==========\n' + differences)
             f.close
         pass
 
-    def analyzeP12(self, workFiles):
-        cmd = 'openssl pkcs12 -in %s -out %s -nodes'%(self.ARGS.cert, workFiles[0])
+    def analyzeP12(self, passwd, workFiles):
+        cmd = 'openssl pkcs12 -password pass:%s -in %s -out %s -nodes'%(passwd, self.ARGS.cert, workFiles[0])
         result = sp.check_call(cmd + DEVNULL, shell=True)
         if result != 0:
-            print('pkcs12 failure! Please Check %s formats.'%self.ARGS.cert)
+            self.out('pkcs12 failure! Please Check %s formats.'%self.ARGS.cert)
         else:
-            print('p12 Dump Success\n> %s'%workFiles[0])
+            self.out('p12 Dump Success\n> %s'%workFiles[0])
             self.getDataPart(workFiles, (BEGINSIGN, ENDSIGN))
             pass
         self.x509Out(workFiles)
@@ -96,9 +99,9 @@ class ProvisioningChecker:
         # macOS 10.12 security: SecPolicySetValue: One or more parameters passed to a function were not valid.
         result = sp.check_call(cmd + DEVNULL, shell=True)
         if result != 0:
-            print('provisioning profile failure! Please Check %s formats.'%self.ARGS.provision)
+            self.out('provisioning profile failure! Please Check %s formats.'%self.ARGS.provision)
         else:
-            print('DeveloperCertificates Dump Success\n> %s'%fileNames[0])
+            self.out('DeveloperCertificates Dump Success\n> %s'%fileNames[0])
             self.getDataPart(fileNames, (DATAOPEN, DATACLOSE))
             pass
         pass
@@ -107,9 +110,9 @@ class ProvisioningChecker:
         cmd = 'openssl x509 -in %s -noout -text > %s'%(workFiles[2], workFiles[3])
         result = sp.check_call(cmd, shell=True)
         if result != 0:
-            print('x509 Dump Failure! Please Check %s formats.'%workFiles[2])
+            self.out('x509 Dump Failure! Please Check %s formats.'%workFiles[2])
         else:
-            print('x509 (rfc5280) Dump Success\n> %s'%workFiles[3])
+            self.out('x509 (rfc5280) Dump Success\n> %s'%workFiles[3])
             pass
         pass
 
@@ -147,7 +150,7 @@ class ProvisioningChecker:
         for x in diff:
             ret += x
             if x.startswith('+') or x.startswith('-') or x.startswith('?'):
-                print(x, end='')
+                self.out(x, end='')
                 isDiff = True
                 pass
         return (isDiff, ret)
@@ -165,6 +168,9 @@ class ProvisioningChecker:
         argParser.add_argument('-c', '--cert',
             nargs='?', type=str, default='',
             help='.p12 file name')
+        argParser.add_argument('-pwd', '--p12pswd',
+            nargs='?', type=str, default='',
+            help='.p12 file password')
         argParser.add_argument('-p', '--provision',
             nargs='?', type=str, default='',
             help='[iOS: .mobileprovision] file name')
