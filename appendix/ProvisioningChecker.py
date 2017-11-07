@@ -35,7 +35,7 @@ class ProvisioningChecker:
 
     def check(self):
         self.preCheck()
-        tmp = './tmp/'
+        tmp = self.ARGS.outpath + '/'
         now = dt.datetime.today()
         dateTmp = tmp + now.strftime('%Y%m%dT%H%M%S')
         exts = ['.out', '.rawkey', '.pem', '-x509.txt']
@@ -174,6 +174,9 @@ class ProvisioningChecker:
         argParser.add_argument('-p', '--provision',
             nargs='?', type=str, default='',
             help='[iOS: .mobileprovision] file name')
+        argParser.add_argument('-o', '--outpath',
+            nargs='?', type=str, default='./tmp',
+            help='set temporary output path')
         ProvisioningChecker.DebugPrint(sys.argv)
         return argParser.parse_args()
 
