@@ -1,6 +1,5 @@
 {
   "atom-workspace": {
-    "ctrl-alt-shift-P": "provisioning-checker:display-results",
-    "escape": "provisioning-checker:cancel"
+    "ctrl-alt-shift-P": "provisioning-checker:toggle"
   }
 }
