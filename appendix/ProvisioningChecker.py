@@ -23,8 +23,8 @@ class ProvisioningChecker:
     def __init__(self):
         self.ARGS = ProvisioningChecker.ArgParser()
 
-    def out(self, msg):
-        sys.stdout.write(msg + '\n')
+    def out(self, msg, end='\n'):
+        sys.stdout.write(msg + end)
 
     def preCheck(self):
         precmd = 'type openssl; openssl version'
@@ -75,6 +75,7 @@ class ProvisioningChecker:
             f = open(outFile, 'w')
             f.write(info + '\n==========\n' + differences)
             f.close
+            sys.exit(0)
         pass
 
     def analyzeP12(self, passwd, workFiles):

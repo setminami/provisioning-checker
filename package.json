@@ -3,10 +3,9 @@
   "main": "./lib/provisioning-checker",
   "version": "0.0.1",
   "description": "Check Provisioning files among .p12 & .mobileprovision",
-  "keywords": ["x509", "openssl"
-  ],
+  "keywords": ["x509", "openssl"],
   "activationCommands": {
-    "atom-workspace": "provisioning-checker:display-results"
+    "atom-workspace": "provisioning-checker:toggle"
   },
   "repository": "https://github.com/setminami/provisioning-checker",
   "license": "MIT",
@@ -14,6 +13,5 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-    "command-palette": "0.42.0"
   }
 }
