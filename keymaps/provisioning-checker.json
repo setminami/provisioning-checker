@@ -1,5 +1,5 @@
 {
   "atom-workspace": {
-    "ctrl-alt-o": "provisioning-checker:toggle"
+    "ctrl-alt-shift-P": "provisioning-checker:toggle"
   }
 }

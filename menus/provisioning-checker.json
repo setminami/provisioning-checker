@@ -3,7 +3,7 @@
     "atom-text-editor": [
       {
         "label": "Toggle provisioning-checker",
-        "command": "provisioning-checker:display-results"
+        "command": "provisioning-checker:toggle"
       }
     ]
   },
@@ -15,8 +15,8 @@
           "label": "Provisioning Checker",
           "submenu": [
             {
-              "label": "Result",
-              "command": "provisioning-checker:display-results"
+              "label": "Toggle",
+              "command": "provisioning-checker:toggle"
             }
           ]
         }
