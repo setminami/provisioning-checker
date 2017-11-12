@@ -3,7 +3,12 @@
   "main": "./lib/provisioning-checker",
   "version": "0.0.1",
   "description": "Check Provisioning files among .p12 & .mobileprovision",
-  "keywords": ["x509", "openssl", "osx", "macOS"],
+  "keywords": [
+    "x509",
+    "openssl",
+    "osx",
+    "macOS"
+  ],
   "activationCommands": {
     "atom-workspace": "provisioning-checker:toggle"
   },
@@ -12,6 +17,8 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "jquery": "^3.2.1"
   }
 }

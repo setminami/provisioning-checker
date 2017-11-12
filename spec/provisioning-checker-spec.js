@@ -13,6 +13,9 @@ describe('ProvisioningChecker', () => {
   beforeEach(() => {
     workspaceElement = atom.views.getView(atom.workspace);
     activationPromise = atom.packages.activatePackage('provisioning-checker');
+    // #10 boilerに次の記述内容が反映されていなかったため追加。
+    // http://flight-manual.atom.io/upgrading-to-1-0-apis/sections/upgrading-your-package/#attaching-the-workspace-to-the-dom
+    jasmine.attachToDOM(workspaceElement);
   });
 
   describe('when the provisioning-checker:toggle event is triggered', () => {
