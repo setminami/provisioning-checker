@@ -1,12 +1,5 @@
 ### Project specific config ###
-language: python
-python:
-  - '3.5'
-matrix:
-  include:
-    - python: '3.5' # this is not strictly necessary
-      env: EXTRA_TESTS=true
-script: env $EXTRA_TESTS ./test.py $TEST_SUITE
+language: generic
 
 env:
   global:
@@ -45,9 +38,11 @@ dist: trusty
 
 addons:
   apt:
+    sources:
+      - deadsnakes
     packages:
     - build-essential
-    - python3
+    - python3.5
     - fakeroot
     - git
     - libsecret-1-dev
