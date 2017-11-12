@@ -40,6 +40,7 @@ addons:
   apt:
     packages:
     - build-essential
+    - python3
     - fakeroot
     - git
     - libsecret-1-dev
