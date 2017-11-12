@@ -1,10 +1,14 @@
 ### Project specific config ###
-language: objective-c
+language: generic
 
 notifications:
   email:
     on_success: change
     on_failure: always
+
+os:
+# security, plutilを使うためmacOS限定
+  - osx
 
 script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
 
