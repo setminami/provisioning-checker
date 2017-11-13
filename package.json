@@ -1,7 +1,7 @@
 {
   "name": "provisioning-checker",
   "main": "./lib/provisioning-checker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Check Provisioning files among .p12 & .mobileprovision",
   "keywords": [
     "x509",
