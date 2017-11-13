@@ -15,3 +15,7 @@ script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.
 branches:
   only:
     - master
+
+before_install:
+  - brew update
+  - brew outdated python3 || brew upgrade python3
