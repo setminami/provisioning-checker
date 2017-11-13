@@ -61,21 +61,23 @@ class ProvisioningChecker:
         outFile = dateTmp + '/diffResult.txt'
         if p12 and prov:
             diff, differences = self.compareX509((p12out[3], provout[3]))
+            exit_code = 0
             if diff :
-                self.out('>> NG!!!! <%s> doesn\'t match with <%s> !'%files)
-                info = '- : %s\n+ : %s'%files
+                info = '>> NG!!!! <%s> doesn\'t match with <%s> !\n'%files
+                info += '- : %s\n+ : %s'%files
                 self.out(info)
+                exit_code = 1
                 pass
             else :
-                self.out('>> OK %s  matches with %s '%files)
-                info = 'Matched Certification as X.509\n%s\n%s'%files
+                info = '>> OK %s  matches with %s \n'%files
+                info += 'Matched Certification as X.509\n%s\n%s'%files
                 pass
-
             self.out('see results %s in X.509 details.'%outFile)
             f = open(outFile, 'w')
             f.write(info + '\n==========\n' + differences)
             f.close
-            sys.exit(0)
+            self.out('> %s'%outFile)
+            sys.exit(exit_code)
         pass
 
     def analyzeP12(self, passwd, workFiles):
