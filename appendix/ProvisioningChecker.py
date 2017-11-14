@@ -60,12 +60,12 @@ class ProvisioningChecker:
             diff, differences = self.compareX509((p12out[3], provout[3]))
             exit_code = 0
             if diff :
-                info = '>> NG!\n---\n%s\n<- NOTMATCH ->\n%s\n'%files
+                info = '>> NG!\n---\n%s\n<- NOT MATCH Certificate ->\n%s\n'%files
                 info += '- : %s\n+ : %s'%files
                 exit_code = 1
                 pass
             else :
-                info = '>> OK\n---\n%s\n<- MATCH ->\n%s\n'%files
+                info = '>> OK\n---\n%s\n<- MATCH Certificate ->\n%s\n'%files
                 pass
             f = open(outFile, 'w')
             f.write(info + '\n==========\n' + differences)
