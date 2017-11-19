@@ -4,10 +4,21 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
+// Contracts
+// - 各panelのcloseボタンはcancel-buttonとすること
 .provisioning-checker {
   padding: 5px;
   background-color: #003300;
   position: relative;
+  .appname {
+    position: relative;
+    font-size: x-large;
+  }
+  .sub-title {
+    position: relative;
+    font-size: x-small;
+  }
+
   .cancel-button {
     width: 12px;
     height: 12px;
@@ -15,4 +26,7 @@
     border: none;
     background-color: transparent;
   }
+}
+
+.info-pane {
 }

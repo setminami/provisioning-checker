@@ -35,9 +35,8 @@ class ProvisioningChecker:
 
     def check(self):
         self.preCheck()
-        tmp = self.ARGS.outpath + '/'
-        now = dt.datetime.today()
-        dateTmp = tmp + now.strftime('%Y%m%dT%H%M%S')
+        tmp = self.ARGS.outpath
+        dateTmp = tmp
         exts = ['.out', '.rawkey', '.pem', '-x509.txt']
         p12out = [dateTmp + '/pkcs12' + ext for ext in exts]
         p12 = False
@@ -46,8 +45,6 @@ class ProvisioningChecker:
 
         if not os.path.isdir(tmp):
             os.mkdir(tmp)
-
-        os.mkdir(dateTmp)
         if self.ARGS.cert is not '' :
             self.analyzeP12(self.ARGS.p12pswd, p12out)
             p12 = True
@@ -61,21 +58,20 @@ class ProvisioningChecker:
         outFile = dateTmp + '/diffResult.txt'
         if p12 and prov:
             diff, differences = self.compareX509((p12out[3], provout[3]))
+            exit_code = 0
             if diff :
-                self.out('>> NG!!!! <%s> doesn\'t match with <%s> !'%files)
-                info = '- : %s\n+ : %s'%files
-                self.out(info)
+                info = '>> NG!\n---\n%s\n<- NOT MATCH Certificate ->\n%s\n'%files
+                info += '- : %s\n+ : %s'%files
+                exit_code = 1
                 pass
             else :
-                self.out('>> OK %s  matches with %s '%files)
-                info = 'Matched Certification as X.509\n%s\n%s'%files
+                info = '>> OK\n---\n%s\n<- MATCH Certificate ->\n%s\n'%files
                 pass
-
-            self.out('see results %s in X.509 details.'%outFile)
             f = open(outFile, 'w')
             f.write(info + '\n==========\n' + differences)
             f.close
-            sys.exit(0)
+            self.out('> %s'%outFile)
+            sys.exit(exit_code)
         pass
 
     def analyzeP12(self, passwd, workFiles):
