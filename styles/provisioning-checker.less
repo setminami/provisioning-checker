@@ -4,26 +4,76 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
+@packname: 'provisioning-checker';
+@background-color: #003300;
+@editor-focused-color: @ui-site-color-2;
+@editor-hover-color: @ui-site-color-3;
+//
+@default-cancel-icon-path: url('atom://@{packname}/assets/cancel.svg');
+@focused-cancel-icon-path: url('atom://@{packname}/assets/cancel-red.svg');
+@cancel-icon-size: 12px;
+
+// mixin　デザイン未定のため、全ケース記述
+
+.border-on(@pos, @style, @color, @w) when(@pos = left) {
+  border-left: @w @style @color !important;
+  transition: all 300ms 0s ease;
+}
+.border-on(@pos, @style, @color, @w) when(@pos = bottom) {
+  border-bottom: @w @style @color !important;
+  transition: all 500ms 0s ease-in;
+}
+.border-on(@pos, @style, @color, @w) when(@pos = right) {
+  border-right: @w @style @color !important;
+  transition: all 300ms 0s ease;
+}
+.border-on(@pos, @style, @color, @w) when(@pos = top) {
+  border-top: @w @style @color !important;
+  transition: all 500ms 0s ease-in;
+}
+
+.border-off { border: hidden; }
+
+// common
+.active-behavior {
+  .border-off;
+  &:hover { .border-on(left, solid, @editor-hover-color, 5px); }
+  atom-text-editor.is-focused { .border-on(bottom, solid, @editor-focused-color, 5px); }
+}
+
 // Contracts
 // - 各panelのcloseボタンはcancel-buttonとすること
 .provisioning-checker {
   padding: 5px;
-  background-color: #003300;
+  background-color: @background-color;
   position: relative;
-  .appname {
-    position: relative;
-    font-size: x-large;
-  }
-  .sub-title {
-    position: relative;
-    font-size: x-small;
-  }
-
   .cancel-button {
-    width: 12px;
-    height: 12px;
+    width: @cancel-icon-size;
+    height: @cancel-icon-size;
+    background-image: @default-cancel-icon-path;
     position: absolute; right: 3px; top: 3px;
     border: none;
     background-color: transparent;
+    &:hover { background-image: @focused-cancel-icon-path; }
   }
+}
+
+// ToDo: selectorに whenが使えるか確認
+p.provision-file-editor {
+  margin-top: 5px;
+  .active-behavior;
+}
+
+p.p12-file-editor { .active-behavior; }
+
+p.p12-pass-editor { .active-behavior; }
+
+#appname {
+  position: relative;
+  font-size: x-large;
+}
+
+#sub-title {
+  position: relative;
+  font-size: x-small;
 }
