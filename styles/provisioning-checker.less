@@ -6,17 +6,17 @@
 
 @packname: 'provisioning-checker';
 @background-color: #003300;
-@editor-focused-color: @ui-site-color-2;
-@editor-hover-color: @ui-site-color-3;
+@editor-focused-color: @ui-site-color-3;
+@editor-hover-color: @editor-focused-color;
 //
 @default-cancel-icon-path: url('atom://@{packname}/assets/cancel.svg');
 @focused-cancel-icon-path: url('atom://@{packname}/assets/cancel-red.svg');
 @cancel-icon-size: 12px;
 
-// mixin　デザイン未定のため、全ケース記述
-
+// border-on
 .border-on(@pos, @style, @color, @w) when(@pos = left) {
   border-left: @w @style @color !important;
+  // border-left: @w @style @color !important;
   transition: all 300ms 0s ease;
 }
 .border-on(@pos, @style, @color, @w) when(@pos = bottom) {
@@ -31,6 +31,10 @@
   border-top: @w @style @color !important;
   transition: all 500ms 0s ease-in;
 }
+.border-on(@pos, @style, @color, @w) when(@pos = all) {
+  border: @w @style @color !important;
+  transition: all 500ms 0s ease;
+}
 
 .border-off { border: hidden; }
 
@@ -38,7 +42,9 @@
 .active-behavior {
   .border-off;
   &:hover { .border-on(left, solid, @editor-hover-color, 5px); }
-  atom-text-editor.is-focused { .border-on(bottom, solid, @editor-focused-color, 5px); }
+  atom-text-editor.is-focused {
+    .border-on(all, solid, @editor-focused-color, 2px);
+  }
 }
 
 // Contracts
@@ -59,6 +65,7 @@
 }
 
 // ToDo: selectorに whenが使えるか確認
+
 p.provision-file-editor {
   margin-top: 5px;
   .active-behavior;
